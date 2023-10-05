@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.conference.dc23.ldn.swag_launcher"
+    namespace = "com.conference.dc23.ldn.store_launcher"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.conference.dc23.ldn.swag_launcher"
+        applicationId = "com.conference.dc23.ldn.store_launcher"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
