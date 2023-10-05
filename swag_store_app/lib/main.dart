@@ -8,7 +8,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 void main() {
-  runApp(const SwagShopApp());
+  Bloc.observer = _SwagStoreAppBlocObserver();
+  runApp(const SwagStoreApp());
+}
+
+/// Bloc observer for logging purposes
+class _SwagStoreAppBlocObserver extends BlocObserver {
+  @override
+  void onEvent(Bloc bloc, Object? event) {
+    debugPrint(event?.toString());
+    super.onEvent(bloc, event);
+  }
 }
 
 /// The route configuration.
@@ -31,14 +41,14 @@ final GoRouter _router = GoRouter(
   ],
 );
 
-class SwagShopApp extends StatefulWidget {
-  const SwagShopApp({super.key});
+class SwagStoreApp extends StatefulWidget {
+  const SwagStoreApp({super.key});
 
   @override
-  State<SwagShopApp> createState() => _SwagShopAppState();
+  State<SwagStoreApp> createState() => _SwagStoreAppState();
 }
 
-class _SwagShopAppState extends State<SwagShopApp> {
+class _SwagStoreAppState extends State<SwagStoreApp> {
   var colorScheme = ColorScheme.fromSeed(seedColor: Colors.purple);
 
   void _fetchTheme() async {
