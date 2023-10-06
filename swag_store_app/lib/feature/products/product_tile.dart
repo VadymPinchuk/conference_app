@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swag_store_app/domain/models/product.dart';
+import 'package:swag_store_app/feature/cart/cart_bloc.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;
@@ -12,21 +14,34 @@ class ProductTile extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => ListTile(
-        leading: ClipOval(
-          child: Image.network(product.imageUrl),
-        ),
-        title: Text(product.name, maxLines: 1),
-        subtitle: Text(
-          'Price: ${product.price} Sizes: ${product.sizes.toString()}',
-          maxLines: 1,
-        ),
-        trailing: CounterView(
-          minNumber: 0,
-          initNumber: amount,
-          counterCallback: (int number) {},
-        ),
-        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+  Widget build(BuildContext context) => BlocSelector<CartBloc, CartState, int>(
+        selector: (state) {
+          if (state is CartDataState) {
+            return state.selection[product] ?? 0;
+          }
+          return 0;
+        },
+        builder: (context, quantity) {
+          return ListTile(
+            leading: ClipOval(
+              child: Image.network(product.imageUrl),
+            ),
+            title: Text(product.name, maxLines: 1),
+            subtitle: Text(
+              'Price: ${product.price} Sizes: ${product.sizes.toString()}',
+              maxLines: 1,
+            ),
+            trailing: CounterView(
+              minNumber: quantity,
+              initNumber: amount,
+              counterCallback: (count) {
+                context.read<CartBloc>().add(CartChangeEvent(product, count));
+              },
+            ),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+          );
+        },
       );
 }
 
@@ -66,7 +81,10 @@ class _CounterViewState extends State<CounterView> {
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _createIncrementDecrementButton(Icons.remove, () => _decrement()),
-        Text(_currentCount.toString()),
+        Text(
+          _currentCount.toString(),
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
         _createIncrementDecrementButton(Icons.add, () => _increment()),
       ],
     );

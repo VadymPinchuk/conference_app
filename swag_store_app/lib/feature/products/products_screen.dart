@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:swag_store_app/feature/cart/cart_bloc.dart';
 import 'package:swag_store_app/feature/products/product_tile.dart';
 import 'package:swag_store_app/feature/products/products_bloc.dart';
 import 'package:flutter/material.dart';
@@ -36,9 +37,25 @@ class ProductsScreen extends StatelessWidget {
   }
 
   Widget _cartMenuItem(BuildContext context) {
-    return Badge(
-      alignment: AlignmentDirectional.topStart,
-      child: _cartIcon(context),
+    return BlocSelector<CartBloc, CartState, int>(
+      selector: (state) {
+        if (state is CartDataState) {
+          return state.selection.length;
+        }
+        return 0;
+      },
+      builder: (context, prodCount) {
+        if (prodCount == 0) {
+          return _cartIcon(context);
+        } else {
+          return Badge(
+            label: Text('$prodCount'),
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            alignment: AlignmentDirectional.topStart,
+            child: _cartIcon(context),
+          );
+        }
+      },
     );
   }
 

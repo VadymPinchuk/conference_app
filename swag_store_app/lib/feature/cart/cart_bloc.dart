@@ -34,7 +34,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   Map<Product, int> _changeSelection(CartChangeEvent event) {
-    Map<Product, int> newMap = Map.from((state as CartMapState).selection);
+    Map<Product, int> newMap = Map.from((state as CartDataState).selection);
     newMap[event.product] = event.count;
     return newMap;
   }

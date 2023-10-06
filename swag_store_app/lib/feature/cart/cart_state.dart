@@ -3,19 +3,20 @@ part of 'cart_bloc.dart';
 @immutable
 sealed class CartState {}
 
-abstract class CartMapState extends CartState {
+/// Abstract State to hold all the data about selected products and total amount
+abstract class CartDataState extends CartState {
   late final Map<Product, int> selection;
   late final double total;
 }
 
-class CartEmptyState extends CartMapState {
+class CartEmptyState extends CartDataState {
   CartEmptyState() {
     super.selection = <Product, int>{};
     super.total = 0;
   }
 }
 
-class CartChangedState extends CartMapState {
+class CartChangedState extends CartDataState {
   CartChangedState(Map<Product, int> selection) {
     super.selection = selection;
     super.total = selection.getTotal();
