@@ -1,5 +1,7 @@
 import 'package:swag_store_app/data/mock_api.dart';
 import 'package:swag_store_app/domain/shop_repository.dart';
+import 'package:swag_store_app/feature/cart/cart_bloc.dart';
+import 'package:swag_store_app/feature/cart/cart_screen.dart';
 import 'package:swag_store_app/feature/products/products_bloc.dart';
 import 'package:swag_store_app/feature/products/products_screen.dart';
 import 'package:swag_store_app/main_screen.dart';
@@ -36,6 +38,12 @@ final GoRouter _router = GoRouter(
             return const ProductsScreen();
           },
         ),
+        GoRoute(
+          path: 'cart',
+          builder: (BuildContext context, GoRouterState state) {
+            return const CartScreen();
+          },
+        ),
       ],
     ),
   ],
@@ -70,11 +78,15 @@ class _SwagStoreAppState extends State<SwagStoreApp> {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-              create: (context) =>
-                  ProductsBloc(RepositoryProvider.of<ShopRepository>(context))),
-          // BlocProvider(
-          //   create: (context) => ProductsBloc(),
-          // ),
+            create: (context) => ProductsBloc(
+              RepositoryProvider.of<ShopRepository>(context),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => CartBloc(
+              RepositoryProvider.of<ShopRepository>(context),
+            ),
+          ),
         ],
         child: MaterialApp.router(
           routerConfig: _router,

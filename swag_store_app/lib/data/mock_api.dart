@@ -107,7 +107,6 @@ class MockApi {
   ];
 
   final List<Order> _orders = List.empty(growable: true);
-
   Future<List<Product>> fetchProducts() async {
     await Future.delayed(const Duration(seconds: 2));
     return _products;

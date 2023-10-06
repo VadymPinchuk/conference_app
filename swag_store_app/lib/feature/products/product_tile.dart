@@ -16,14 +16,17 @@ class ProductTile extends StatelessWidget {
         leading: ClipOval(
           child: Image.network(product.imageUrl),
         ),
-        title: Text(product.name),
-        subtitle: Text(product.sizes.toString()),
+        title: Text(product.name, maxLines: 1),
+        subtitle: Text(
+          'Price: ${product.price} Sizes: ${product.sizes.toString()}',
+          maxLines: 1,
+        ),
         trailing: CounterView(
           minNumber: 0,
           initNumber: amount,
           counterCallback: (int number) {},
         ),
-        contentPadding: EdgeInsets.fromLTRB(8, 8, 4, 8),
+        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       );
 }
 

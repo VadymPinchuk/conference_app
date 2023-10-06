@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:swag_store_app/feature/products/product_tile.dart';
 import 'package:swag_store_app/feature/products/products_bloc.dart';
 import 'package:flutter/material.dart';
@@ -43,12 +44,6 @@ class ProductsScreen extends StatelessWidget {
 
   Widget _cartIcon(BuildContext context) => IconButton(
         icon: const Icon(Icons.shopping_cart),
-        onPressed: () {
-          // You can add an action here that will be triggered
-          // when the cart icon is pressed
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Cart icon tapped!')),
-          );
-        },
+        onPressed: () => context.go('/cart'),
       );
 }

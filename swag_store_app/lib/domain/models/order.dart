@@ -4,17 +4,21 @@ import 'package:intl/intl.dart';
 class Order {
   late final String number;
   late final DateTime date;
-  final List<Product> products;
+  final Map<Product, int> products;
+
+  late final double totalAmount;
 
   Order({
     required this.products,
+    required this.totalAmount,
   }) {
     var now = _getDate();
     number = _getNumber(now);
     date = now;
   }
 
-  Order copyWithNewNumber() => Order(products: products);
+  Order copyWithNewNumber() =>
+      Order(products: products, totalAmount: totalAmount);
 
   DateTime _getDate() => DateTime.now();
 
