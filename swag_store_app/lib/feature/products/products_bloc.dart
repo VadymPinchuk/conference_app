@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:swag_store_app/domain/models/product.dart';
 import 'package:swag_store_app/domain/shop_repository.dart';
-import 'package:flutter/material.dart';
 
 part 'products_event.dart';
 
