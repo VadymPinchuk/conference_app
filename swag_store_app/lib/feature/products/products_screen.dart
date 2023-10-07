@@ -6,13 +6,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductsScreen extends StatelessWidget {
-  const ProductsScreen({super.key});
+  final String prevScreen;
+
+  const ProductsScreen({
+    super.key,
+    this.prevScreen = '',
+  });
 
   @override
   Widget build(BuildContext context) {
+    var primary = Theme.of(context).colorScheme.primary;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Available SWAG'),
+        leading: IconButton(
+          icon: Icon(Icons.close, color: primary),
+          onPressed: () => context.go('/$prevScreen'),
+        ),
+        title: Text(
+          'Available SWAG',
+          style:
+              Theme.of(context).textTheme.titleLarge!.copyWith(color: primary),
+        ),
         actions: [
           _cartMenuItem(context),
         ],

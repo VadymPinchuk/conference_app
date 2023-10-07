@@ -1,68 +1,90 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:swag_store_app/domain/models/product.dart';
 import 'package:swag_store_app/feature/cart/cart_bloc.dart';
 import 'package:swag_store_app/feature/products/product_tile.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({super.key});
+  final String prevScreen;
+
+  const CartScreen({
+    super.key,
+    this.prevScreen = '',
+  });
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Row(
-            children: [
-              Icon(Icons.shopping_cart),
-              SizedBox(width: 16),
-              Text('SWAG Cart'),
-            ],
-          ),
+  Widget build(BuildContext context) {
+    var primary = Theme.of(context).colorScheme.primary;
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.close, color: primary),
+          onPressed: () => context.go('/$prevScreen'),
         ),
-        body: BlocBuilder<CartBloc, CartState>(
-          builder: (_, state) => switch (state) {
-            CartEmptyState() => Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.shopping_bag_outlined,
-                      size: 150,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Nothing added to the cart, yet',
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.secondary),
-                    ),
-                  ],
-                ),
-              ),
-            CartChangedState() => Column(
+        title: Row(
+          children: [
+            Text(
+              'SWAG',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(color: primary),
+            ),
+            const SizedBox(width: 16),
+            Icon(
+              Icons.shopping_cart,
+              color: primary,
+            ),
+          ],
+        ),
+      ),
+      body: BlocBuilder<CartBloc, CartState>(
+        builder: (_, state) => switch (state) {
+          CartEmptyState() => Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  _productsList(state.selection),
-                  Row(
-                    children: [
-                      Expanded(child: Text('Total amount is: ${state.total}')),
-                      ElevatedButton(
-                        style: raisedButtonStyle,
-                        onPressed: () {},
-                        child: Text('Order items'),
-                      ),
-                    ],
+                  Icon(
+                    Icons.shopping_bag_outlined,
+                    size: 150,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Nothing added to the cart, yet',
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.secondary),
                   ),
                 ],
               ),
-            CartOrderPlacingState() => Stack(
-                children: [],
-              ),
-            CartOrderedState() => Stack(
-                children: [],
-              ),
-            _ => Placeholder(),
-          },
-        ),
-      );
+            ),
+          CartChangedState() => Column(
+              children: [
+                _productsList(state.selection),
+                Row(
+                  children: [
+                    Expanded(child: Text('Total amount is: ${state.total}')),
+                    ElevatedButton(
+                      style: raisedButtonStyle,
+                      onPressed: () {},
+                      child: const Text('Order items'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          CartOrderPlacingState() => const Stack(
+              children: [],
+            ),
+          CartOrderedState() => const Stack(
+              children: [],
+            ),
+          _ => const Placeholder(),
+        },
+      ),
+    );
+  }
 
   Widget _productsList(Map<Product, int> selection) => Expanded(
         child: ListView.builder(
@@ -77,8 +99,8 @@ class CartScreen extends StatelessWidget {
   ButtonStyle get raisedButtonStyle => ElevatedButton.styleFrom(
         backgroundColor: Colors.grey[300],
         foregroundColor: Colors.black87,
-        minimumSize: Size(88, 36),
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        minimumSize: const Size(88, 36),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(2)),
         ),

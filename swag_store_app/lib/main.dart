@@ -41,7 +41,7 @@ final GoRouter _router = GoRouter(
         GoRoute(
           path: 'cart',
           builder: (BuildContext context, GoRouterState state) {
-            return const CartScreen();
+            return const CartScreen(prevScreen: 'products',);
           },
         ),
       ],

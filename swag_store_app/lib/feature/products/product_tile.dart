@@ -32,8 +32,8 @@ class ProductTile extends StatelessWidget {
               maxLines: 1,
             ),
             trailing: CounterView(
-              minNumber: quantity,
-              initNumber: amount,
+              minNumber: 0,
+              initNumber: quantity,
               counterCallback: (count) {
                 context.read<CartBloc>().add(CartChangeEvent(product, count));
               },
