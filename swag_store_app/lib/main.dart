@@ -8,6 +8,7 @@ import 'package:swag_store_app/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:swag_store_app/routes.dart';
 
 void main() {
   Bloc.observer = _SwagStoreAppBlocObserver();
@@ -23,6 +24,7 @@ class _SwagStoreAppBlocObserver extends BlocObserver {
   }
 }
 
+
 /// The route configuration.
 final GoRouter _router = GoRouter(
   routes: <RouteBase>[
@@ -33,15 +35,15 @@ final GoRouter _router = GoRouter(
       },
       routes: <RouteBase>[
         GoRoute(
-          path: 'products',
+          path: Routes.products.name,
           builder: (BuildContext context, GoRouterState state) {
             return const ProductsScreen();
           },
         ),
         GoRoute(
-          path: 'cart',
+          path: Routes.cart.name,
           builder: (BuildContext context, GoRouterState state) {
-            return const CartScreen(prevScreen: 'products',);
+            return CartScreen(prevScreen: state.extra?.toString() ?? '/');
           },
         ),
       ],
