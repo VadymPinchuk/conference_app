@@ -24,7 +24,6 @@ class _SwagStoreAppBlocObserver extends BlocObserver {
   }
 }
 
-
 /// The route configuration.
 final GoRouter _router = GoRouter(
   routes: <RouteBase>[
