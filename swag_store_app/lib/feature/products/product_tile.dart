@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:swag_store_app/domain/models/product.dart';
 import 'package:swag_store_app/feature/cart/cart_bloc.dart';
+import 'package:swag_store_app/feature/products/product_counter_widget.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;
@@ -14,119 +16,55 @@ class ProductTile extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => BlocSelector<CartBloc, CartState, int>(
-        selector: (state) {
-          if (state is CartDataState) {
-            return state.selection[product] ?? 0;
-          }
-          return 0;
-        },
-        builder: (context, quantity) {
-          return ListTile(
-            leading: ClipOval(
-              child: Image.network(
-                product.imageUrl,
-                loadingBuilder: (_, child, isLoading) {
-                  // return child when loaded, show progress when loading
-                  return isLoading == null
-                      ? child
-                      : const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: CircularProgressIndicator(),
-                        );
-                },
-              ),
-            ),
-            title: Text(product.name, maxLines: 1),
-            subtitle: Text(
-              _getSubtitle(),
-              maxLines: 2,
-            ),
-            trailing: CounterView(
-              minNumber: 0,
-              initNumber: quantity,
-              counterCallback: (count) {
-                context.read<CartBloc>().add(CartChangeEvent(product, count));
+  Widget build(BuildContext context) {
+    var colors = Theme.of(context).colorScheme;
+    return BlocSelector<CartBloc, CartState, int>(
+      selector: (state) {
+        if (state is CartDataState) {
+          return state.selection[product] ?? 0;
+        }
+        return 0;
+      },
+      builder: (_, quantity) {
+        return ListTile(
+          leading: ClipOval(
+            child: Image.network(
+              product.imageUrl,
+              width: 50,
+              height: 50,
+              loadingBuilder: (_, child, isLoading) {
+                // return child when loaded, show progress when loading
+                return isLoading == null
+                    ? child
+                    : Shimmer.fromColors(
+                        baseColor: colors.primaryContainer,
+                        highlightColor: colors.secondaryContainer,
+                        child: CircleAvatar(
+                          radius: 25,
+                          backgroundColor: colors.secondaryContainer,
+                        ),
+                      );
               },
             ),
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-          );
-        },
-      );
-
-  String _getSubtitle() => '''${product.sizes.toString()}
-${product.price} £''';
-}
-
-class CounterView extends StatefulWidget {
-  final int minNumber;
-  final int initNumber;
-  final Function(int) counterCallback;
-
-  const CounterView({
-    super.key,
-    required this.minNumber,
-    required this.initNumber,
-    required this.counterCallback,
-  });
-
-  @override
-  _CounterViewState createState() => _CounterViewState();
-}
-
-class _CounterViewState extends State<CounterView> {
-  late int _minNumber;
-  late int _currentCount;
-  late Function _counterCallback;
-
-  @override
-  void initState() {
-    _currentCount = widget.initNumber;
-    _counterCallback = widget.counterCallback;
-    _minNumber = widget.minNumber;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _createIncrementDecrementButton(Icons.remove, () => _decrement()),
-        Text(
-          _currentCount.toString(),
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        _createIncrementDecrementButton(Icons.add, () => _increment()),
-      ],
+          ),
+          title: Text(product.name, maxLines: 1),
+          subtitle: Text(
+            _getSubtitle(),
+            maxLines: 2,
+          ),
+          trailing: ProductCounterWidget(
+            minNumber: 0,
+            initNumber: quantity,
+            counterCallback: (count) {
+              context.read<CartBloc>().add(CartChangeEvent(product, count));
+            },
+          ),
+          contentPadding: const EdgeInsets.all(8).copyWith(right: 0),
+        );
+      },
     );
   }
 
-  void _increment() {
-    setState(() {
-      _currentCount++;
-      _counterCallback(_currentCount);
-    });
-  }
-
-  void _decrement() {
-    setState(() {
-      if (_currentCount > _minNumber) {
-        _currentCount--;
-        _counterCallback(_currentCount);
-      }
-    });
-  }
-
-  Widget _createIncrementDecrementButton(IconData icon, onPressed) =>
-      TextButton(
-        style: ButtonStyle(
-          foregroundColor: MaterialStateProperty.all<Color>(
-              Theme.of(context).colorScheme.secondary),
-        ),
-        onPressed: onPressed,
-        child: Icon(icon),
-      );
+  String _getSubtitle() => '''${product.sizes.toString()}
+${product.price} £''';
 }

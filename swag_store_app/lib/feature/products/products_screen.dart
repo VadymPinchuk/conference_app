@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:swag_store_app/feature/cart/cart_bloc.dart';
+import 'package:swag_store_app/feature/products/product_shimmer.dart';
 import 'package:swag_store_app/feature/products/product_tile.dart';
 import 'package:swag_store_app/feature/products/products_bloc.dart';
 import 'package:flutter/material.dart';
@@ -37,8 +38,9 @@ class ProductsScreen extends StatelessWidget {
           ProductsEmptyState() => const Center(
               child: Text('No Products yet'),
             ),
-          ProductsLoadingState() => const Center(
-              child: CircularProgressIndicator(),
+          ProductsLoadingState() => ListView.builder(
+              itemCount: 15,
+              itemBuilder: (_, index) => const ProductShimmer(),
             ),
           ProductsLoadedState() => ListView.builder(
               itemCount: state.products.length,
