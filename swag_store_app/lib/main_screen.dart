@@ -1,4 +1,3 @@
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swag_store_app/feature/products/products_bloc.dart';
 import 'package:flutter/material.dart';
@@ -27,62 +26,72 @@ class MainScreen extends StatelessWidget {
 
   List<Widget> _buildGridWidgets(BuildContext context) {
     final list = List<Widget>.empty(growable: true);
-    final scheme = Theme.of(context).colorScheme;
-    list.add(
-      _itemWidget(FontAwesomeIcons.gamepad, 'Products', scheme.inversePrimary,
-          () => context.go('/${Routes.products.name}', extra: '')),
-    );
-    list.add(
-      _itemWidget(Icons.dangerous, 'Cart', Colors.red,
-          () => context.go('/${Routes.cart.name}', extra: '')),
-    );
-    list.add(
-      _itemWidget(Icons.dangerous, 'Cart', scheme.inversePrimary,
-          () => context.go('/${Routes.cart.name}', extra: '')),
-    );
-    list.add(
-      _itemWidget(Icons.dangerous, 'Cart', scheme.background,
-          () => context.go('/${Routes.cart.name}', extra: '')),
-    );
-    list.add(
-      _itemWidget(Icons.dangerous, 'Cart', scheme.background,
-          () => context.go('/${Routes.cart.name}', extra: '')),
-    );
-    list.add(
-      _itemWidget(Icons.dangerous, 'Cart', scheme.background,
-          () => context.go('/${Routes.cart.name}', extra: '')),
-    );
-    list.add(
-      _itemWidget(Icons.dangerous, 'Cart', scheme.background,
-          () => context.go('/${Routes.cart.name}', extra: '')),
-    );
-    list.add(
-      _itemWidget(Icons.dangerous, 'Cart', scheme.background,
-          () => context.go('/${Routes.cart.name}', extra: '')),
-    );
-    list.add(
-      _itemWidget(Icons.dangerous, 'Cart', scheme.background,
-          () => context.go('/${Routes.cart.name}', extra: '')),
-    );
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final textStyle = theme.textTheme.titleMedium!;
+    list
+      ..add(
+        _itemWidget(
+          theme,
+          FontAwesomeIcons.store,
+          'Products',
+          () => context.go('/${Routes.products.name}', extra: ''),
+        ),
+      )
+      ..add(
+        _itemWidget(
+          theme,
+          FontAwesomeIcons.cartShopping,
+          'Cart',
+          () => context.go('/${Routes.cart.name}', extra: ''),
+        ),
+      )
+      ..add(_emptyPoint(context, theme))
+      ..add(_emptyPoint(context, theme))
+      ..add(_emptyPoint(context, theme))
+      ..add(_emptyPoint(context, theme))
+      ..add(_emptyPoint(context, theme))
+      ..add(_emptyPoint(context, theme))
+      ..add(_emptyPoint(context, theme));
     return list;
   }
 
+  Widget _emptyPoint(BuildContext context, ThemeData theme) {
+    return _itemWidget(
+      theme,
+      Icons.dangerous,
+      'Empty',
+      null,
+    );
+  }
+
   Widget _itemWidget(
-          IconData icon, String title, Color color, Function() onTap) =>
-      GestureDetector(
-        onTap: onTap,
-        child: Card(
+    ThemeData theme,
+    IconData icon,
+    String title,
+    Function()? onTap,
+  ) =>
+      Card(
+        clipBehavior: Clip.antiAlias,
+        color: onTap == null ? theme.colorScheme.secondaryContainer : theme.colorScheme.primaryContainer,
+        child: InkWell(
+          onTap: onTap,
+          highlightColor: theme.colorScheme.primary.withAlpha(50),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircleAvatar(
-                backgroundColor: color,
-                child: FaIcon(
-                  icon,
-                ),
+              FaIcon(
+                icon,
+                size: 50,
+                color: onTap == null ? theme.colorScheme.secondary : theme.colorScheme.primary,
               ),
               const SizedBox(height: 8),
-              Text(title),
+              Text(
+                title,
+                style: theme.textTheme.titleMedium!.apply(
+                  color: onTap == null ? theme.colorScheme.secondary : theme.colorScheme.secondary,
+                ),
+              ),
             ],
           ),
         ),

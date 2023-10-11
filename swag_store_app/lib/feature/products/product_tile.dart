@@ -24,12 +24,23 @@ class ProductTile extends StatelessWidget {
         builder: (context, quantity) {
           return ListTile(
             leading: ClipOval(
-              child: Image.network(product.imageUrl),
+              child: Image.network(
+                product.imageUrl,
+                loadingBuilder: (_, child, isLoading) {
+                  // return child when loaded, show progress when loading
+                  return isLoading == null
+                      ? child
+                      : const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(),
+                        );
+                },
+              ),
             ),
             title: Text(product.name, maxLines: 1),
             subtitle: Text(
-              'Price: ${product.price} Sizes: ${product.sizes.toString()}',
-              maxLines: 1,
+              _getSubtitle(),
+              maxLines: 2,
             ),
             trailing: CounterView(
               minNumber: 0,
@@ -43,6 +54,9 @@ class ProductTile extends StatelessWidget {
           );
         },
       );
+
+  String _getSubtitle() => '''${product.sizes.toString()}
+${product.price} £''';
 }
 
 class CounterView extends StatefulWidget {

@@ -100,7 +100,7 @@ class MockApi {
         imageUrl:
             'https://ih1.redbubble.net/image.3735736620.8674/ur,backpack_front,square,600x600.jpg'),
     Product(
-        name: 'Sash Sticker',
+        name: 'Dash Sticker',
         price: 2.99,
         imageUrl:
             'https://ih1.redbubble.net/image.3433260968.7459/st,small,507x507-pad,600x600,f8f8f8.jpg'),
