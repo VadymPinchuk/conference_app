@@ -42,21 +42,8 @@ class SwagStoreApp extends StatefulWidget {
 }
 
 class _SwagStoreAppState extends State<SwagStoreApp> {
-  var colorScheme = ColorScheme.fromSeed(seedColor: Colors.purple);
-
-  void _fetchTheme() async {
-    var newColorScheme = await ColorScheme.fromImageProvider(
-      provider: const NetworkImage(
-          'https://storage.googleapis.com/cms-storage-bucket/0dbfcc7a59cd1cf16282.png'),
-    );
-    setState(() {
-      colorScheme = newColorScheme;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    _fetchTheme();
     return RepositoryProvider(
       lazy: false,
       create: (_) => ShopRepository(MockApi()),
@@ -76,10 +63,14 @@ class _SwagStoreAppState extends State<SwagStoreApp> {
         child: MaterialApp.router(
           routerConfig: widget._router,
           title: 'Not Official Swag Store',
-          theme: ThemeData(
-            useMaterial3: true,
-            colorScheme: colorScheme,
-          )
+          theme: ThemeData.light(useMaterial3: true).copyWith(
+            colorScheme:
+                ColorScheme.fromSeed(seedColor: const Color(0xFF042B59)),
+          ),
+          darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
+            colorScheme:
+                ColorScheme.fromSeed(seedColor: const Color(0xFF027DFD)),
+          ),
         ),
       ),
     );

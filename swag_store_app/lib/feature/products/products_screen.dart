@@ -10,12 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swag_store_app/routes.dart';
 
 class ProductsScreen extends StatelessWidget {
-  final String prevScreen;
-
-  const ProductsScreen({
-    super.key,
-    this.prevScreen = '',
-  });
+  const ProductsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +19,7 @@ class ProductsScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.close, color: primary),
-          onPressed: () =>
-              prevScreen.isEmpty ? exit(0) : context.go('/$prevScreen'),
+          onPressed: () => context.canPop() ? context.pop() : exit(0),
         ),
         title: Text(
           'Available SWAG',
@@ -90,7 +84,6 @@ class ProductsScreen extends StatelessWidget {
 
   Widget _cartIcon(BuildContext context) => IconButton(
         icon: const Icon(Icons.shopping_cart),
-        onPressed: () =>
-            context.go('/${Routes.cart.name}', extra: Routes.products.name),
+        onPressed: () => context.push('/${Routes.cart.name}'),
       );
 }

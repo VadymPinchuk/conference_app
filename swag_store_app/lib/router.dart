@@ -23,7 +23,7 @@ final GoRouter mainRouter = GoRouter(
         GoRoute(
           path: Routes.cart.name,
           builder: (BuildContext context, GoRouterState state) {
-            return CartScreen(prevScreen: state.extra?.toString() ?? '/');
+            return const CartScreen();
           },
         ),
       ],

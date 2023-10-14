@@ -8,12 +8,7 @@ import 'package:swag_store_app/feature/cart/cart_bloc.dart';
 import 'package:swag_store_app/feature/products/product_tile.dart';
 
 class CartScreen extends StatelessWidget {
-  final String prevScreen;
-
-  const CartScreen({
-    super.key,
-    this.prevScreen = '',
-  });
+  const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +17,7 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.close, color: primary),
-          onPressed: () => prevScreen.isEmpty ? exit(0) : context.go('/$prevScreen'),
+          onPressed: () => context.canPop() ? context.pop() : exit(0),
         ),
         title: Row(
           children: [

@@ -35,7 +35,7 @@ class MainScreen extends StatelessWidget {
           theme,
           FontAwesomeIcons.store,
           'Products',
-          () => context.go('/${Routes.products.name}', extra: ''),
+          () => context.push('/${Routes.products.name}'),
         ),
       )
       ..add(
@@ -43,7 +43,7 @@ class MainScreen extends StatelessWidget {
           theme,
           FontAwesomeIcons.cartShopping,
           'Cart',
-          () => context.go('/${Routes.cart.name}', extra: ''),
+          () => context.push('/${Routes.cart.name}'),
         ),
       )
       ..add(_emptyPoint(context, theme))
