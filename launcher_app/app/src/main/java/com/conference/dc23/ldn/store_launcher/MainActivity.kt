@@ -63,66 +63,82 @@ fun GridLauncher() {
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        repeat(3) {
-            Row(
-                modifier = Modifier
-                    .weight(1.0f)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+        Row(
+            modifier = Modifier
+                .weight(1.0f)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            AppCard(
+                "Products", R.drawable.ic_dash, Modifier.weight(1.0f)
             ) {
-                AppCard(
-                    "Products",
-                    R.drawable.ic_launcher_foreground,
-                    Modifier.weight(1.0f)
-                ) {
-                    startActivity(
-                        context,
-                        Intent("com.conference.dc23.ldn.swag_store_app.OPEN_PRODUCTS"),
-                        null
-                    )
-                }
-                AppCard(
-                    "Cart",
-                    R.drawable.ic_launcher_foreground,
-                    Modifier.weight(1.0f)
-                ) {
-                    startActivity(
-                        context,
-                        Intent("com.conference.dc23.ldn.swag_store_app.OPEN_CART"),
-                        null
-                    )
-                }
-                AppCard(
-                    "Settings",
-                    R.drawable.ic_launcher_foreground,
-                    Modifier.weight(1.0f)
-                ) {
-                    startActivity(context, Intent(Settings.ACTION_SETTINGS), null)
-
-                }
+                startActivity(
+                    context, Intent("com.conference.dc23.ldn.swag_store_app.OPEN_PRODUCTS"), null
+                )
+            }
+            AppCard(
+                "Cart", R.drawable.ic_cart, Modifier.weight(1.0f)
+            ) {
+                startActivity(
+                    context, Intent("com.conference.dc23.ldn.swag_store_app.OPEN_CART"), null
+                )
+            }
+            AppCard(
+                "Empty", R.drawable.ic_close, Modifier.weight(1.0f), null
+            )
+        }
+        Row(
+            modifier = Modifier
+                .weight(1.0f)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            AppCard(
+                "Empty", R.drawable.ic_close, Modifier.weight(1.0f), null
+            )
+            AppCard(
+                "Empty", R.drawable.ic_close, Modifier.weight(1.0f), null
+            )
+            AppCard(
+                "Empty", R.drawable.ic_close, Modifier.weight(1.0f), null
+            )
+        }
+        Row(
+            modifier = Modifier
+                .weight(1.0f)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            AppCard(
+                "Empty", R.drawable.ic_close, Modifier.weight(1.0f), null
+            )
+            AppCard(
+                "Empty", R.drawable.ic_close, Modifier.weight(1.0f), null
+            )
+            AppCard(
+                "Settings", R.drawable.ic_settings, Modifier.weight(1.0f)
+            ) {
+                startActivity(context, Intent(Settings.ACTION_SETTINGS), null)
             }
         }
     }
 }
 
 @Composable
-fun AppCard(title: String, imgRes: Int, modifier: Modifier, onClick: () -> Unit) {
+fun AppCard(title: String, imgRes: Int, modifier: Modifier, onClick: (() -> Unit)?) {
     Surface(
         modifier = modifier
             .padding(4.dp)
             .clip(RoundedCornerShape(16.dp)),
     ) {
-        Card(
-            modifier = Modifier
-                .fillMaxSize()
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = rememberRipple(
-                        bounded = true,
-                        color = MaterialTheme.colorScheme.primary
-                    ),
-                ) { onClick() }
-        ) {
+        Card(modifier = Modifier
+            .fillMaxSize()
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(
+                    bounded = true, color = MaterialTheme.colorScheme.primary
+                ),
+            ) { onClick?.invoke() }) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -131,15 +147,14 @@ fun AppCard(title: String, imgRes: Int, modifier: Modifier, onClick: () -> Unit)
                 Image(
                     painter = painterResource(id = imgRes),
                     contentDescription = title,
-                    contentScale = ContentScale.Fit,
+                    contentScale = ContentScale.FillBounds,
                     modifier = Modifier
-                        .size(48.dp)
+                        .size(56.dp)
                         .align(Alignment.CenterHorizontally)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = title,
-                    style = TextStyle(
+                    text = title, style = TextStyle(
                         fontSize = 20.sp,
                         color = MaterialTheme.colorScheme.onBackground,
                     )
