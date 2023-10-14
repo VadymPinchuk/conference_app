@@ -33,9 +33,9 @@ class _SwagStoreAppBlocObserver extends BlocObserver {
 }
 
 class SwagStoreApp extends StatefulWidget {
-  RouterConfig<Object> _router;
+  final RouterConfig<Object> _router;
 
-  SwagStoreApp(this._router, {super.key});
+  const SwagStoreApp(this._router, {super.key});
 
   @override
   State<SwagStoreApp> createState() => _SwagStoreAppState();
@@ -79,7 +79,7 @@ class _SwagStoreAppState extends State<SwagStoreApp> {
           theme: ThemeData(
             useMaterial3: true,
             colorScheme: colorScheme,
-          ),
+          )
         ),
       ),
     );

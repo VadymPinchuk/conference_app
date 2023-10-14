@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:go_router/go_router.dart';
 import 'package:swag_store_app/feature/cart/cart_bloc.dart';
 import 'package:swag_store_app/feature/products/product_shimmer.dart';
@@ -22,7 +24,8 @@ class ProductsScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.close, color: primary),
-          onPressed: () => context.go('/$prevScreen'),
+          onPressed: () =>
+              prevScreen.isEmpty ? exit(0) : context.go('/$prevScreen'),
         ),
         title: Text(
           'Available SWAG',

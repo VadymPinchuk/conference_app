@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -20,7 +22,7 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.close, color: primary),
-          onPressed: () => context.go('/$prevScreen'),
+          onPressed: () => prevScreen.isEmpty ? exit(0) : context.go('/$prevScreen'),
         ),
         title: Row(
           children: [
