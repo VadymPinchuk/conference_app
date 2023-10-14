@@ -36,12 +36,15 @@ android {
         jvmTarget = '1.8'
     }
 
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.conference.dc23.ldn.swag_store_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
@@ -51,7 +54,26 @@ android {
         versionName flutterVersionName
     }
 
+    flavorDimensions "app"
+    productFlavors {
+
+        multiple {
+            dimension "app"
+            versionCode 1
+            versionName "1.0.0"
+        }
+
+        single {
+            dimension "app"
+            versionCode 1
+            versionName "1.0.0"
+        }
+    }
+
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.

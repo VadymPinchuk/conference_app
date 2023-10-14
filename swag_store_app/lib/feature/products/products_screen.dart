@@ -38,14 +38,22 @@ class ProductsScreen extends StatelessWidget {
           ProductsEmptyState() => const Center(
               child: Text('No Products yet'),
             ),
-          ProductsLoadingState() => ListView.builder(
-              itemCount: 15,
-              itemBuilder: (_, index) => const ProductShimmer(),
+          ProductsLoadingState() => AnimatedOpacity(
+              opacity: 1,
+              duration: const Duration(seconds: 2),
+              child: ListView.builder(
+                itemCount: 15,
+                itemBuilder: (_, index) => const ProductShimmer(),
+              ),
             ),
-          ProductsLoadedState() => ListView.builder(
-              itemCount: state.products.length,
-              itemBuilder: (_, index) => ProductTile(
-                product: state.products[index],
+          ProductsLoadedState() => AnimatedOpacity(
+              opacity: 1,
+              duration: const Duration(seconds: 2),
+              child: ListView.builder(
+                itemCount: state.products.length,
+                itemBuilder: (_, index) => ProductTile(
+                  product: state.products[index],
+                ),
               ),
             ),
         },
