@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -69,14 +70,35 @@ fun GridLauncher() {
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                repeat(3) {
-                    AppCard(
-                        "App Name",
-                        R.drawable.ic_launcher_foreground,
-                        Modifier.weight(1.0f)
-                    ) {
-                        startActivity(context, Intent(Settings.ACTION_SETTINGS), null)
-                    }
+                AppCard(
+                    "Products",
+                    R.drawable.ic_launcher_foreground,
+                    Modifier.weight(1.0f)
+                ) {
+                    startActivity(
+                        context,
+                        Intent("com.conference.dc23.ldn.swag_store_app.OPEN_PRODUCTS"),
+                        null
+                    )
+                }
+                AppCard(
+                    "Cart",
+                    R.drawable.ic_launcher_foreground,
+                    Modifier.weight(1.0f)
+                ) {
+                    startActivity(
+                        context,
+                        Intent("com.conference.dc23.ldn.swag_store_app.OPEN_CART"),
+                        null
+                    )
+                }
+                AppCard(
+                    "Settings",
+                    R.drawable.ic_launcher_foreground,
+                    Modifier.weight(1.0f)
+                ) {
+                    startActivity(context, Intent(Settings.ACTION_SETTINGS), null)
+
                 }
             }
         }
@@ -87,24 +109,25 @@ fun GridLauncher() {
 fun AppCard(title: String, imgRes: Int, modifier: Modifier, onClick: () -> Unit) {
     Surface(
         modifier = modifier
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(
-                    bounded = true,
-                    color = MaterialTheme.colorScheme.primary
-                ),
-            ) { onClick() }
             .padding(4.dp)
-            .clip(RoundedCornerShape(8.dp)),
-//        color = Color.White
+            .clip(RoundedCornerShape(16.dp)),
     ) {
         Card(
             modifier = Modifier
                 .fillMaxSize()
-//                .background(MaterialTheme.colorScheme.primary)
-//                .padding(16.dp)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = rememberRipple(
+                        bounded = true,
+                        color = MaterialTheme.colorScheme.primary
+                    ),
+                ) { onClick() }
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
                 Image(
                     painter = painterResource(id = imgRes),
                     contentDescription = title,
@@ -117,7 +140,7 @@ fun AppCard(title: String, imgRes: Int, modifier: Modifier, onClick: () -> Unit)
                 Text(
                     text = title,
                     style = TextStyle(
-                        fontSize = 24.sp,
+                        fontSize = 20.sp,
                         color = MaterialTheme.colorScheme.onBackground,
                     )
                 )
@@ -125,48 +148,3 @@ fun AppCard(title: String, imgRes: Int, modifier: Modifier, onClick: () -> Unit)
         }
     }
 }
-
-//@Composable
-//fun AppCard(title: String, imgRes: Int, onClick: () -> Unit) {
-//    Surface(
-//        modifier = Modifier
-//            .size(100.dp)
-//            .clip(RoundedCornerShape(8.dp)),
-////            .indication(interactionSource = MutableInteractionSource(), indication = Ripple()),
-//        color = Color.White
-//    ) {
-//        Box(
-//            modifier = Modifier
-//                .clickable { onClick() }
-//                .background(MaterialTheme.colorScheme.background)
-//                .padding(16.dp)
-//        ) {
-//            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-//                Image(
-//                    painter = painterResource(id = imgRes),
-//                    contentDescription = title,
-//                    contentScale = ContentScale.Fit,
-//                    modifier = Modifier
-//                        .size(48.dp)
-//                        .align(Alignment.CenterHorizontally)
-//                )
-//                Spacer(modifier = Modifier.height(8.dp))
-//                Text(
-//                    text = title,
-//                    style = TextStyle(
-//                        fontSize = 24.sp,
-//                        color = MaterialTheme.colorScheme.onBackground,
-//                    )
-//                )
-//            }
-//        }
-//    }
-//}
-
-//@Composable
-//@Preview
-//fun AppCardPreview() {
-//    Surface {
-//        AppCard("App Name", R.drawable.ic_launcher_foreground)
-//    }
-//}
