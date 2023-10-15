@@ -3,7 +3,6 @@
 
     <application
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
         android:label="swag_store_app">
 
         <activity
@@ -11,6 +10,7 @@
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:exported="true"
             android:hardwareAccelerated="true"
+            android:icon="@mipmap/ic_prod_launcher"
             android:label="Store Products"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
@@ -18,13 +18,14 @@
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="com.conference.dc23.ldn.swag_store_app.OPEN_PRODUCTS" />
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -33,6 +34,7 @@
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:exported="true"
             android:hardwareAccelerated="true"
+            android:icon="@mipmap/ic_cart_launcher"
             android:label="Store Cart"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
@@ -40,13 +42,14 @@
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="com.conference.dc23.ldn.swag_store_app.OPEN_CART" />
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
