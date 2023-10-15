@@ -14,6 +14,7 @@ class ProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<ProductsBloc>().add(ProductsLoadingEvent());
     var primary = Theme.of(context).colorScheme.primary;
     return Scaffold(
       appBar: AppBar(

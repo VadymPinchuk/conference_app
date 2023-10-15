@@ -14,7 +14,11 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     on<ProductsLoadingEvent>((event, emit) async {
       if (state is! ProductsLoadedState) {
         emit(ProductsLoadingState());
-        var products = await _repository.fetchProducts();
+        var products = await _repository.readProducts();
+        if (products.isEmpty) {
+          products = await _repository.fetchProducts();
+          await _repository.saveProducts(products);
+        }
         if (products.isEmpty) {
           emit(ProductsEmptyState());
         } else {

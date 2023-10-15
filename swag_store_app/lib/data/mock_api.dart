@@ -21,11 +21,12 @@ class MockApi {
         imageUrl:
             'https://ih1.redbubble.net/image.3694795880.8037/gbrf,5x7,f,540x540-pad,450x450,f8f8f8.jpg'),
     Product(
-        name: 'T-shirt Dark W',
-        price: 20,
-        imageUrl:
-            'https://ih1.redbubble.net/image.5178868346.9928/ssrco,classic_tee,womens,101010:01c5ca27c6,front_alt,square_product,600x600.jpg',
-        sizes: ['XXS', 'XS', 'S', 'M', 'L']),
+      name: 'T-shirt Dark W',
+      price: 20,
+      imageUrl:
+          'https://ih1.redbubble.net/image.5178868346.9928/ssrco,classic_tee,womens,101010:01c5ca27c6,front_alt,square_product,600x600.jpg',
+      sizes: '[XXS, XS. S, M, L]',
+    ),
     Product(
         name: 'Sticker Logo gray scale',
         price: 0.99,
@@ -37,28 +38,31 @@ class MockApi {
         imageUrl:
             'https://ih1.redbubble.net/image.1097144531.6498/st,small,507x507-pad,600x600,f8f8f8.u2.jpg'),
     Product(
-        name: 'T-shirt Light W',
-        price: 20,
-        imageUrl:
-            'https://ih1.redbubble.net/image.3265868284.0051/ssrco,classic_tee,womens,fafafa:ca443f4786,front_alt,square_product,600x600.jpg',
-        sizes: ['XXS', 'XS', 'S', 'M', 'L']),
+      name: 'T-shirt Light W',
+      price: 20,
+      imageUrl:
+          'https://ih1.redbubble.net/image.3265868284.0051/ssrco,classic_tee,womens,fafafa:ca443f4786,front_alt,square_product,600x600.jpg',
+      sizes: '[XXS, XS. S, M, L]',
+    ),
     Product(
         name: 'iPhone case',
         price: 25.99,
         imageUrl:
             'https://ih1.redbubble.net/image.5080901605.8050/icr,iphone_14_tough,back,a,x600-pad,600x600,f8f8f8.jpg'),
     Product(
-        name: 'T-shirt Dark M',
-        price: 20,
-        imageUrl:
-            'https://ih1.redbubble.net/image.1558727679.4665/ssrco,classic_tee,mens,101010:01c5ca27c6,front_alt,square_product,600x600.jpg',
-        sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL']),
+      name: 'T-shirt Dark M',
+      price: 20,
+      imageUrl:
+          'https://ih1.redbubble.net/image.1558727679.4665/ssrco,classic_tee,mens,101010:01c5ca27c6,front_alt,square_product,600x600.jpg',
+      sizes: '[S, M, L, XL, XXL, XXXL]',
+    ),
     Product(
-        name: 'T-shirt Light M',
-        price: 20,
-        imageUrl:
-            'https://ih1.redbubble.net/image.3265919409.1384/ssrco,classic_tee,mens,fafafa:ca443f4786,front_alt,square_product,600x600.jpg',
-        sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL']),
+      name: 'T-shirt Light M',
+      price: 20,
+      imageUrl:
+          'https://ih1.redbubble.net/image.3265919409.1384/ssrco,classic_tee,mens,fafafa:ca443f4786,front_alt,square_product,600x600.jpg',
+      sizes: '[S, M, L, XL, XXL, XXXL]',
+    ),
     Product(
         name: 'Dash fluff toy',
         price: 333.99,
@@ -107,8 +111,9 @@ class MockApi {
   ];
 
   final List<Order> _orders = List.empty(growable: true);
+
   Future<List<Product>> fetchProducts() async {
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 2));
     return _products;
   }
 

@@ -1,7 +1,5 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:swag_store_app/feature/products/products_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:swag_store_app/routes.dart';
 
@@ -10,7 +8,6 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<ProductsBloc>().add(ProductsLoadingEvent());
     var query = MediaQuery.of(context);
     var size = query.size;
     var padding = query.padding;
