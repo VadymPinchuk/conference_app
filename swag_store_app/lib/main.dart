@@ -75,12 +75,15 @@ class _SwagStoreAppState extends State<SwagStoreApp> {
             routerConfig: widget._router,
             title: 'Not Official Swag Store',
             theme: ThemeData.light(useMaterial3: true).copyWith(
-              colorScheme:
-                  ColorScheme.fromSeed(seedColor: const Color(0xFF042B59)),
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: const Color(0xFF042B59),
+              ),
             ),
             darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
-              colorScheme:
-                  ColorScheme.fromSeed(seedColor: const Color(0xFF027DFD)),
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: const Color(0xFF027DFD),
+                brightness: Brightness.dark,
+              ),
             ),
           ),
         ),

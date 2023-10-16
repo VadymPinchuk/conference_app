@@ -68,6 +68,9 @@ class _ProductCounterWidgetState extends State<ProductCounterWidget> {
               Theme.of(context).colorScheme.secondary),
         ),
         onPressed: onPressed,
-        child: Icon(icon),
+        child: Icon(
+          icon,
+          color: Theme.of(context).colorScheme.onBackground,
+        ),
       );
 }

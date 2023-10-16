@@ -26,6 +26,7 @@ class ProductTile extends StatelessWidget {
         return 0;
       },
       builder: (_, quantity) {
+        var theme = Theme.of(context);
         return ListTile(
           leading: ClipOval(
             child: Image.network(
@@ -47,10 +48,16 @@ class ProductTile extends StatelessWidget {
               },
             ),
           ),
-          title: Text(product.name, maxLines: 1),
+          tileColor: Theme.of(context).colorScheme.background,
+          title: Text(
+            product.name,
+            maxLines: 1,
+            style: theme.textTheme.titleMedium,
+          ),
           subtitle: Text(
             _getSubtitle(),
             maxLines: 2,
+            style: theme.textTheme.bodyMedium,
           ),
           trailing: ProductCounterWidget(
             minNumber: 0,

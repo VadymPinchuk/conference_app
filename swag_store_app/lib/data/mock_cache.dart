@@ -88,7 +88,7 @@ class Cache {
         where: 'number = ?',
         whereArgs: ['cart'],
       );
-      return maps.firstOrNull == null ? null : Order.fromJson(maps.first);
+      return maps.firstOrNull == null ? null : maps.first.toOrder();
     });
   }
 }
