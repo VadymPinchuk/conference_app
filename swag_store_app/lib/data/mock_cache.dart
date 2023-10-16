@@ -50,7 +50,6 @@ class Cache {
           product.toJson(),
           conflictAlgorithm: ConflictAlgorithm.replace,
         );
-        print("INSERT RESULT: $result");
       }
     });
   }

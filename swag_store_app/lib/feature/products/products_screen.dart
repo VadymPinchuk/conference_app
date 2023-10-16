@@ -1,20 +1,31 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:swag_store_app/feature/cart/cart_bloc.dart';
 import 'package:swag_store_app/feature/products/product_shimmer.dart';
 import 'package:swag_store_app/feature/products/product_tile.dart';
 import 'package:swag_store_app/feature/products/products_bloc.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swag_store_app/routes.dart';
 
-class ProductsScreen extends StatelessWidget {
+class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<ProductsScreen> createState() => _ProductsScreenState();
+}
+
+class _ProductsScreenState extends State<ProductsScreen> {
+  @override
+  void didChangeDependencies() {
     context.read<ProductsBloc>().add(ProductsLoadingEvent());
+    context.read<CartBloc>().add(CartInitEvent());
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     var primary = Theme.of(context).colorScheme.primary;
     return Scaffold(
       appBar: AppBar(
