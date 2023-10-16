@@ -18,6 +18,10 @@ class ShopRepository {
   Future<void> saveProducts(List<Product> products) async =>
       _cache.saveProducts(products);
 
+  Future<void> saveCart(Order cart) async => _cache.saveCart(cart);
+
+  Future<Order?> getCart() async => _cache.getCart();
+
   Future<Order> placeOrder(Order newOrder) async => _api.placeOrder(newOrder);
 
   Future<List<Order>> fetchOrders() async => _api.fetchOrders();

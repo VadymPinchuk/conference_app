@@ -7,8 +7,19 @@ import 'package:swag_store_app/domain/models/product.dart';
 import 'package:swag_store_app/feature/cart/cart_bloc.dart';
 import 'package:swag_store_app/feature/products/product_tile.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  @override
+  void didChangeDependencies() {
+    context.read<CartBloc>().add(CartInitEvent());
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +49,9 @@ class CartScreen extends StatelessWidget {
       ),
       body: BlocBuilder<CartBloc, CartState>(
         builder: (_, state) => switch (state) {
+          CartLoadingState() => const Center(
+              child: CircularProgressIndicator(),
+            ),
           CartEmptyState() => Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,

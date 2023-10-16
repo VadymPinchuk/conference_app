@@ -1,3 +1,4 @@
+
 class Product {
   late final int id;
   final String name;
@@ -10,30 +11,25 @@ class Product {
     required this.name,
     required this.price,
     required this.imageUrl,
-    this.sizes = '[single size]',
     this.currency = '£',
-  }) {
-    id = hashCode;
-  }
+    this.sizes = '[single size]',
+  }) : id = imageUrl.hashCode;
 
-  Product.fromMap(Map<String, dynamic> data)
-      : id = data['id'],
-        name = data['name'] as String,
-        price = double.tryParse(data['price'] as String) ?? 0.0,
-        imageUrl = data['imageUrl'] as String,
-        sizes = data['sizes'] as String,
-        currency = data['currency'] as String;
+  factory Product.fromJson(Map<String, dynamic> json) => Product(
+        name: json['name'] as String,
+        price: double.tryParse(json['price'] as String) ?? 0.0,
+        imageUrl: json['imageUrl'] as String,
+        currency: json['currency'] as String? ?? '£',
+        sizes: json['sizes'] as String? ?? '[single size]',
+      );
 
-  Map<String, dynamic> toMap() => {
+  /// Connect the generated [_$PersonToJson] function to the `toJson` method.
+  Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,
         'name': name,
-        'price': price,
+        'price': price.toString(),
         'imageUrl': imageUrl,
         'currency': currency,
-        'sizes': sizes.toString(),
+        'sizes': sizes,
       };
-
-  @override
-  String toString() =>
-      'Product{id: $id, name: $name, price: $price, imageUrl: $imageUrl, currency: $currency, sizes: $sizes';
 }

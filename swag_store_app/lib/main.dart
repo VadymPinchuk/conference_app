@@ -31,7 +31,7 @@ void storeProducts() async {
 class _SwagStoreAppBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {
-    debugPrint(event?.toString());
+    print(event?.toString());
     super.onEvent(bloc, event);
   }
 }

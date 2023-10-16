@@ -3,6 +3,8 @@ part of 'cart_bloc.dart';
 @immutable
 abstract class CartEvent {}
 
+class CartInitEvent extends CartEvent {}
+
 class CartChangeEvent extends CartEvent {
   final Product product;
   final int count;

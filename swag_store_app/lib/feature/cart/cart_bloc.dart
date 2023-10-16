@@ -14,13 +14,31 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   CartBloc(this._repository) : super(CartEmptyState()) {
     on<CartEvent>((event, emit) async {
+      if (event is CartInitEvent) {
+        emit(CartLoadingState());
+        Order? cart = await _repository.getCart();
+        if (cart != null) {
+          var products = await _repository.readProducts();
+          if (products.isEmpty) {
+            products = await _repository.fetchProducts();
+            await _repository.saveProducts(products);
+          }
+          var selection = cart.selection.toCartState(products);
+          emit(CartChangedState(selection));
+        } else {
+          emit(CartEmptyState());
+        }
+      }
+
       if (event is CartChangeEvent) {
         emit(CartChangedState(_changeSelection(event)));
+        Order cart = _makeAnOrder('cart');
+        await _repository.saveCart(cart);
       }
 
       if (event is CartOrderMakingEvent) {
         if (state is CartChangedState) {
-          var order = _makeAnOrder();
+          var order = _makeAnOrder(null);
           emit(CartOrderPlacingState(order));
           order = await _repository.placeOrder(order);
           emit(CartOrderedState(order));
@@ -39,9 +57,13 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     return newMap;
   }
 
-  Order _makeAnOrder() {
+  Order _makeAnOrder(String? tempNumber) {
     var data = (state as CartChangedState).selection;
     var total = (state as CartChangedState).total;
-    return Order(products: data, totalAmount: total);
+    return Order(
+      tempNumber: tempNumber,
+      selection: data.map((key, value) => MapEntry(key.id, value)),
+      totalAmount: total,
+    );
   }
 }
