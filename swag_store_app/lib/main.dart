@@ -31,8 +31,14 @@ void storeProducts() async {
 class _SwagStoreAppBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {
-    print(event?.toString());
+    debugPrint(event?.toString());
     super.onEvent(bloc, event);
+  }
+
+  @override
+  void onChange(BlocBase bloc, Change change) {
+    debugPrint('$bloc changed from ${change.currentState} to ${change.nextState}');
+    super.onChange(bloc, change);
   }
 }
 

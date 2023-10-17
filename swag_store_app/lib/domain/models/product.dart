@@ -32,4 +32,13 @@ class Product {
         'currency': currency,
         'sizes': sizes,
       };
+
+  @override
+  int get hashCode => id.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    return hashCode == other.hashCode;
+  }
+
 }

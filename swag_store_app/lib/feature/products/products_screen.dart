@@ -38,9 +38,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
           style:
               Theme.of(context).textTheme.titleLarge!.copyWith(color: primary),
         ),
-        actions: [
-          _cartMenuItem(context),
-        ],
+        actions: context.canPop() ? [_cartMenuItem(context)] : null,
       ),
       body: BlocBuilder<ProductsBloc, ProductsState>(
         builder: (_, state) => switch (state) {
@@ -69,6 +67,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
       ),
     );
   }
+
+  _ProductsScreenState();
 
   Widget _cartMenuItem(BuildContext context) {
     return BlocSelector<CartBloc, CartState, int>(

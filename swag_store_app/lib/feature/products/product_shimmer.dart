@@ -40,8 +40,7 @@ class ProductShimmer extends StatelessWidget {
           ),
         ),
         trailing: ProductCounterWidget(
-          minNumber: 0,
-          initNumber: 0,
+          value: 0,
           counterCallback: (count) {},
         ),
         contentPadding: const EdgeInsets.all(8).copyWith(right: 0),

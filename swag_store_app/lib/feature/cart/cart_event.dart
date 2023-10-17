@@ -13,5 +13,3 @@ class CartChangeEvent extends CartEvent {
 }
 
 class CartOrderMakingEvent extends CartEvent {}
-
-class CartOrderedEvent extends CartEvent {}

@@ -12,6 +12,9 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
 
   ProductsBloc(this._repository) : super(ProductsEmptyState()) {
     on<ProductsLoadingEvent>((event, emit) async {
+      // loading is in the progress
+      if (state is ProductsLoadingState) return;
+      // if no data were loaded - we still can load
       if (state is! ProductsLoadedState) {
         emit(ProductsLoadingState());
         var products = await _repository.readProducts();
@@ -26,11 +29,5 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
         }
       }
     });
-  }
-
-  @override
-  void onEvent(ProductsEvent event) {
-    super.onEvent(event);
-    debugPrint(event.toString());
   }
 }

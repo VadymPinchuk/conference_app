@@ -14,6 +14,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc(this._repository) : super(CartEmptyState()) {
     on<CartEvent>((event, emit) async {
       if (event is CartInitEvent) {
+        // If state was not lost - no need to reload state
+        if (state is CartChangedState) {
+          emit(state);
+          return;
+        }
+        // In other case reloading state to get data from the cache
         emit(CartLoadingState());
         Order? cart = await _repository.getCart();
         if (cart != null) {
@@ -22,7 +28,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             products = await _repository.fetchProducts();
             await _repository.saveProducts(products);
           }
-          var selection = cart.selection.toCartState(products);
+          Map<Product, int> selection =
+              Map.from(cart.selection.toCartState(products));
           emit(CartChangedState(selection));
         } else {
           emit(CartEmptyState());
@@ -35,7 +42,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           await _repository.clearCart();
           emit(CartEmptyState());
         } else {
-          emit(CartChangedState(_changeSelection(event)));
+          emit(CartChangedState(newSelection));
           Order cart = _makeAnOrder('cart');
           await _repository.saveCart(cart);
         }
@@ -48,11 +55,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           await _repository.clearCart();
           order = await _repository.placeOrder(order);
           emit(CartOrderedState(order));
+          // pushing empty to reset state
+          await Future.delayed(
+            const Duration(seconds: 2),
+            () => emit(CartEmptyState()),
+          );
         }
-      }
-
-      if (event is CartOrderedEvent) {
-        emit(CartEmptyState());
       }
     });
   }

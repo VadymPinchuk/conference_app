@@ -134,7 +134,7 @@ class _CartScreenState extends State<CartScreen> {
               onDismissed: (_) => context.read<CartBloc>().add(
                     CartChangeEvent(product, 0),
                   ),
-              child: ProductTile(product: product, amount: selection[product]!),
+              child: ProductTile(product: product),
             );
           },
         ),
