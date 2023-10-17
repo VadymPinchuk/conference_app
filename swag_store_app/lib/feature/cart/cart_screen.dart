@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:swag_store_app/domain/models/product.dart';
 import 'package:swag_store_app/feature/cart/cart_bloc.dart';
@@ -73,15 +74,31 @@ class _CartScreenState extends State<CartScreen> {
           CartChangedState() => Column(
               children: [
                 _productsList(state.selection),
-                Row(
-                  children: [
-                    Expanded(child: Text('Total amount is: ${state.total}')),
-                    ElevatedButton(
-                      style: raisedButtonStyle,
-                      onPressed: () {},
-                      child: const Text('Order items'),
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                            'Total amount is: ${state.total.toStringAsFixed(2)}'),
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          elevation: MaterialStateProperty.resolveWith<double?>(
+                            (Set<MaterialState> states) {
+                              return states.contains(MaterialState.pressed)
+                                  ? 16
+                                  : null;
+                            },
+                          ),
+                        ),
+                        onPressed: () => context
+                            .read<CartBloc>()
+                            .add(CartOrderMakingEvent()),
+                        child: const Text('Order items'),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -102,18 +119,34 @@ class _CartScreenState extends State<CartScreen> {
           itemCount: selection.length,
           itemBuilder: (_, index) {
             var product = selection.keys.toList()[index];
-            return ProductTile(product: product, amount: selection[product]!);
+            return Dismissible(
+              key: Key(product.imageUrl),
+              background: Container(
+                color: Theme.of(context).colorScheme.tertiaryContainer,
+                alignment: AlignmentDirectional.centerStart,
+                child: _trashCanWidget(),
+              ),
+              secondaryBackground: Container(
+                color: Theme.of(context).colorScheme.tertiaryContainer,
+                alignment: AlignmentDirectional.centerEnd,
+                child: _trashCanWidget(),
+              ),
+              onDismissed: (_) => context.read<CartBloc>().add(
+                    CartChangeEvent(product, 0),
+                  ),
+              child: ProductTile(product: product, amount: selection[product]!),
+            );
           },
         ),
       );
 
-  ButtonStyle get raisedButtonStyle => ElevatedButton.styleFrom(
-        backgroundColor: Colors.grey[300],
-        foregroundColor: Colors.black87,
-        minimumSize: const Size(88, 36),
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(2)),
-        ),
-      );
+  Padding _trashCanWidget() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: FaIcon(
+        FontAwesomeIcons.trashCan,
+        color: Theme.of(context).colorScheme.onTertiaryContainer,
+      ),
+    );
+  }
 }

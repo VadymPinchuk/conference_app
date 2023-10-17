@@ -6,7 +6,6 @@ import 'package:swag_store_app/domain/shop_repository.dart';
 import 'package:swag_store_app/feature/extensions.dart';
 
 part 'cart_event.dart';
-
 part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
@@ -31,15 +30,22 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       }
 
       if (event is CartChangeEvent) {
-        emit(CartChangedState(_changeSelection(event)));
-        Order cart = _makeAnOrder('cart');
-        await _repository.saveCart(cart);
+        var newSelection = _changeSelection(event);
+        if (newSelection.isEmpty) {
+          await _repository.clearCart();
+          emit(CartEmptyState());
+        } else {
+          emit(CartChangedState(_changeSelection(event)));
+          Order cart = _makeAnOrder('cart');
+          await _repository.saveCart(cart);
+        }
       }
 
       if (event is CartOrderMakingEvent) {
         if (state is CartChangedState) {
           var order = _makeAnOrder(null);
           emit(CartOrderPlacingState(order));
+          await _repository.clearCart();
           order = await _repository.placeOrder(order);
           emit(CartOrderedState(order));
         }
@@ -53,6 +59,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Map<Product, int> _changeSelection(CartChangeEvent event) {
     Map<Product, int> newMap = Map.from((state as CartDataState).selection);
+    if (event.count == 0) {
+      newMap.remove(event.product);
+      return newMap;
+    }
     newMap[event.product] = event.count;
     return newMap;
   }

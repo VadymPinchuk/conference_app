@@ -24,5 +24,7 @@ class ShopRepository {
 
   Future<Order> placeOrder(Order newOrder) async => _api.placeOrder(newOrder);
 
+  Future<void> clearCart() async => _cache.clearCart();
+
   Future<List<Order>> fetchOrders() async => _api.fetchOrders();
 }

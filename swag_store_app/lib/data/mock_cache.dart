@@ -78,6 +78,18 @@ class Cache {
     });
   }
 
+  Future<void> clearCart() async {
+    init().then((_) async {
+      // Get a reference to the database.
+      final db = await _database!;
+      await db.delete(
+        'cart',
+        where: 'number = ?',
+        whereArgs: ['cart']
+      );
+    });
+  }
+
   Future<Order?> getCart() async {
     return init().then((_) async {
       final db = await _database!;
