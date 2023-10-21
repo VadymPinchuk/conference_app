@@ -7,24 +7,24 @@ import 'package:swag_store_app/feature/cart/cart_bloc.dart';
 import 'package:swag_store_app/feature/products/products_bloc.dart';
 import 'package:swag_store_app/router.dart';
 
-void main() async {
+void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = _SwagStoreAppBlocObserver();
-  runApp(SwagStoreApp(mainRouter));
+  runApp(SwagStoreApp(getRouter(args.firstOrNull)));
 }
 
 @pragma('vm:entry-point')
-void storeCart() async {
+void storeCart(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = _SwagStoreAppBlocObserver();
-  runApp(SwagStoreApp(cartRouter));
+  runApp(SwagStoreApp(getRouter(args.firstOrNull)));
 }
 
 @pragma('vm:entry-point')
-void storeProducts() async {
+void storeProducts(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = _SwagStoreAppBlocObserver();
-  runApp(SwagStoreApp(productsRouter));
+  runApp(SwagStoreApp(getRouter(args.firstOrNull)));
 }
 
 /// Bloc observer for logging purposes

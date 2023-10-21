@@ -4,4 +4,5 @@ class ProductsActivity : BaseActivity() {
 
     override var entryPoint = "storeProducts"
 
+    override fun getDartEntrypointArgs() = listOf("products")
 }

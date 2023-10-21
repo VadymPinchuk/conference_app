@@ -5,8 +5,14 @@ import 'package:swag_store_app/feature/products/products_screen.dart';
 import 'package:swag_store_app/main_screen.dart';
 import 'package:swag_store_app/routes.dart';
 
+RouterConfig<Object> getRouter(String? path) => switch (path) {
+      'products' => _productsRouter,
+      'cart' => _cartRouter,
+      _ => _mainRouter,
+    };
+
 /// Single entry application route configuration.
-final GoRouter mainRouter = GoRouter(
+final GoRouter _mainRouter = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: '/',
@@ -32,7 +38,7 @@ final GoRouter mainRouter = GoRouter(
 );
 
 /// Multiple entry application products route configuration.
-final GoRouter productsRouter = GoRouter(
+final GoRouter _productsRouter = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: '/',
@@ -42,7 +48,7 @@ final GoRouter productsRouter = GoRouter(
 );
 
 /// Multiple entry application cart route configuration.
-final GoRouter cartRouter = GoRouter(
+final GoRouter _cartRouter = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: '/',
