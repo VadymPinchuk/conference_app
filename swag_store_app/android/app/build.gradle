@@ -61,12 +61,14 @@ android {
             dimension "app"
             versionCode 1
             versionName "1.0.0"
+            applicationIdSuffix ".multiple"
         }
 
         single {
             dimension "app"
             versionCode 1
             versionName "1.0.0"
+            applicationIdSuffix ".single"
         }
     }
 

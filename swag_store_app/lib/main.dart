@@ -37,7 +37,8 @@ class _SwagStoreAppBlocObserver extends BlocObserver {
 
   @override
   void onChange(BlocBase bloc, Change change) {
-    debugPrint('$bloc changed from ${change.currentState} to ${change.nextState}');
+    debugPrint(
+        '$bloc changed from ${change.currentState} to ${change.nextState}');
     super.onChange(bloc, change);
   }
 }
@@ -79,6 +80,7 @@ class _SwagStoreAppState extends State<SwagStoreApp> {
           ],
           child: MaterialApp.router(
             routerConfig: widget._router,
+            debugShowCheckedModeBanner: false,
             title: 'Not Official Swag Store',
             theme: ThemeData.light(useMaterial3: true).copyWith(
               colorScheme: ColorScheme.fromSeed(
