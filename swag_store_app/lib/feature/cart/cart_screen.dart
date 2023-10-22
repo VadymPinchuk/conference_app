@@ -8,6 +8,8 @@ import 'package:swag_store_app/domain/models/product.dart';
 import 'package:swag_store_app/feature/cart/cart_bloc.dart';
 import 'package:swag_store_app/feature/products/product_tile.dart';
 
+import '../products/product_shimmer.dart';
+
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
 
@@ -50,8 +52,9 @@ class _CartScreenState extends State<CartScreen> {
       ),
       body: BlocBuilder<CartBloc, CartState>(
         builder: (_, state) => switch (state) {
-          CartLoadingState() => const Center(
-              child: CircularProgressIndicator(),
+          CartLoadingState() => ListView.builder(
+              itemCount: 15,
+              itemBuilder: (_, index) => const ProductShimmer(),
             ),
           CartEmptyState() => Center(
               child: Column(
@@ -102,11 +105,37 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ],
             ),
-          CartOrderPlacingState() => const Stack(
-              children: [],
+          CartOrderPlacingState() => Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Placing your order',
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.secondary),
+                  ),
+                ],
+              ),
             ),
-          CartOrderedState() => const Stack(
-              children: [],
+          CartOrderedState() => Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.add_shopping_cart,
+                    size: 150,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Order placed. Make new?',
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.secondary),
+                  ),
+                ],
+              ),
             ),
           _ => const Placeholder(),
         },
