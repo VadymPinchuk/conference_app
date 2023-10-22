@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class ProductCounterWidget extends StatelessWidget {
   final int value;
-  final Function(int) counterCallback;
+  final Function(int)? counterCallback;
 
   const ProductCounterWidget({
     super.key,
     required this.value,
-    required this.counterCallback,
+    this.counterCallback,
   });
 
   @override
@@ -18,7 +18,9 @@ class ProductCounterWidget extends StatelessWidget {
         _buttonWidget(
           context,
           Icons.remove,
-          value == 0 ? null : () => counterCallback(value - 1),
+          value == 0 || counterCallback == null
+              ? null
+              : () => counterCallback?.call(value - 1),
         ),
         Text(
           value.toString(),
@@ -27,7 +29,9 @@ class ProductCounterWidget extends StatelessWidget {
         _buttonWidget(
           context,
           Icons.add,
-          () => counterCallback(value + 1),
+          counterCallback == null
+              ? null
+              : () => counterCallback?.call(value + 1),
         ),
       ],
     );

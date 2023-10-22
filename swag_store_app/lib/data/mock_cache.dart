@@ -60,7 +60,7 @@ class Cache {
       final db = await _database!;
 
       final List<Map<String, dynamic>> maps = await db.query('products');
-
+      await Future.delayed(const Duration(seconds: 2));
       return List.generate(maps.length, (i) => Product.fromJson(maps[i]));
     });
   }
